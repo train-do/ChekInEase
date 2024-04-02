@@ -12,10 +12,25 @@ import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function Home({ navigation }) {
+    const months = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
     const { name, email, token } = useSelector((state) => state.credential)
     const [modal, setModal] = useState(false)
-    const [months, setMonths] = useState([])
-    const [month, setMonth] = useState(0)
+    const [year, setYear] = useState({})
+    // const [months, setMonths] = useState([])
+    const [month, setMonth] = useState(new Date().getMonth())
     const [days, setDays] = useState([])
     function selectMonth(select) {
         if (select == "++") {
@@ -25,6 +40,8 @@ export default function Home({ navigation }) {
         } else {
             setMonth(select)
         }
+        console.log(year[months[month]]);
+        // setDays(year[months[month]])
     }
     async function getPresence() {
         try {
@@ -37,12 +54,9 @@ export default function Home({ navigation }) {
             for (const key in data) {
                 tempArr.push(key)
             }
-            const dataDays = data[tempArr[tempArr.length - 1]]
-            setMonths(tempArr)
-            setMonth(tempArr.length - 1)
-            setDays(dataDays)
-            // console.log(tempArr[tempArr.length - 1]);
-            // console.log(dataDays);
+            setYear(data)
+            // setDays(data[months[month]])
+            console.log(data[months[month]], months[month]);
         } catch (error) {
             console.log(error.response.data);
         }
@@ -111,7 +125,7 @@ export default function Home({ navigation }) {
                             </View>
                         </Pressable>
                         <TouchableOpacity onPress={() => selectMonth("++")}
-                            disabled={month == months.length - 1}>
+                            disabled={month == new Date().getMonth()}>
                             <View style={styles.btnCalendar}>
                                 <Icon2
                                     name={"chevron-right"}
@@ -131,7 +145,7 @@ export default function Home({ navigation }) {
                 </View>
                 <Gap height={15} />
                 <FlatList
-                    data={days}
+                    data={year[months[month]]}
                     renderItem={({ item, index, separators }) => (
                         <BoxTanggal item={item} index={index} />
                     )}
@@ -152,7 +166,7 @@ export default function Home({ navigation }) {
             <ModalCalendar
                 visible={modal}
                 handleCloseModal={() => setModal(false)}
-                months={months}
+                months={months.slice(0, new Date().getMonth() + 1)}
                 selectMonth={selectMonth}
             />
             {/* Modal */}

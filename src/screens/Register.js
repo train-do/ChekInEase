@@ -19,7 +19,7 @@ export default function Register({ navigation }) {
             position: [{ name: "staff" }, { name: "supervisor" }, { name: "manager" }]
         })
     const [form, setForm] = useState({
-        name: "Tester", gender: "Pria", email: "tester2@gmail.com", phone_number: "0812113223", password: "123456", division: "", department: "", branch: "", position: "", device_model: `${Math.ceil(Math.random() * 100000000000)}`
+        name: "", gender: "", email: "", phone_number: "", password: "", division: "", department: "", branch: "", position: "", device_model: `${Math.ceil(Math.random() * 100000000000)}`
     })
     const [loading, setLoading] = useState(false)
     async function getDivisi() {

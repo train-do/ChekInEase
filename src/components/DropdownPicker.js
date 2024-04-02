@@ -19,22 +19,22 @@ export default function DropdownPicker({
                 <View style={styles.formContainer}>
                     <Icon style={styles.icon}
                         name={iconName} size={27} color={"black"} />
-                    <View style={{ flex: 1 }}>
-                        <Picker
-                            style={{ color: "black" }}
-                            mode={"dropdown"}
-                            enabled={enabled}
-                            selectedValue={selectedValue}
-                            onValueChange={onValueChange}>
-                            <Picker.Item label={label} value="" enabled={false} />
-                            {listOption.map((el, idx) => {
-                                // console.log(el, label)
-                                return (
-                                    <Picker.Item label={el.name} value={!el.id ? el.name : el.id} key={el.id + idx} />
-                                )
-                            })}
-                        </Picker>
-                    </View>
+                    {/* <View style={{ flex: 1 }}> */}
+                    <Picker
+                        style={{ color: "black", backgroundColor: "red", flex: 1 }}
+                        mode={"dropdown"}
+                        enabled={enabled}
+                        selectedValue={selectedValue}
+                        onValueChange={onValueChange}>
+                        <Picker.Item label={label} value="" enabled={false} />
+                        {listOption.map((el, idx) => {
+                            // console.log(el, label)
+                            return (
+                                <Picker.Item label={el.name} value={!el.id ? el.name : el.id} key={el.id + idx} />
+                            )
+                        })}
+                    </Picker>
+                    {/* </View> */}
                 </View>
             </View>
             <Gap height={20} />
@@ -48,7 +48,9 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "blue",
+        flex: 1
     },
     label: {
         fontWeight: "bold",
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         borderBottomColor: "#B8BC00",
-        borderBottomWidth: 2
+        borderBottomWidth: 2,
+        // backgroundColor:"red"
     }
 })

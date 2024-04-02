@@ -17,7 +17,7 @@ export default function Scanner({ navigation }) {
             setIsActive(false)
             try {
                 // const canGoBack = navigation.canGoBack()
-                let respon
+                let respon = {}
                 // console.log(codes[0].value);
                 if (codes[0].value == "Pulang") {
                     // console.log("masuk kondisi pulang");
@@ -46,6 +46,9 @@ export default function Scanner({ navigation }) {
                     )
                     // console.log(data.message, "DATA");
                     respon = data
+                } else {
+                    console.log("RANDOM QR");
+                    respon.message = "QR Code tidak dikenali"
                 }
                 const canGoBack = navigation.canGoBack()
                 if (respon.message && canGoBack) {
@@ -62,6 +65,7 @@ export default function Scanner({ navigation }) {
     // console.log(hasPermission, token);
     async function permission() {
         await Linking.openSettings()
+        setModal(false)
         // requestPermission()
     }
     if (!device) {
@@ -83,7 +87,8 @@ export default function Scanner({ navigation }) {
             )}
             <Modal
                 transparent={true}
-                visible={!hasPermission}>
+                visible={!hasPermission}
+                onRequestClose={() => navigation.goBack()}>
                 <View style={styles.modalContainer}>
                     <View style={styles.modal}>
                         <Text style={styles.teks}>{hasPermission ? "Memeriksa Perizinan...." : "Izin kamera diperlukan..."}</Text>
@@ -115,13 +120,15 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         flexDirection: "row",
         alignItems: "center",
-        gap: 20
+        gap: 20,
+        borderRadius: 50 / 4
     },
     modalContainer: {
         // backgroundColor: "black",
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        borderRadius: 50 / 2
     },
     container: {
         flex: 1,
